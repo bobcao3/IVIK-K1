@@ -9,6 +9,7 @@
 #include "string.h"
 #include "proc.h"
 #include "global.h"
+#include "ipc.h"
 
 
 /*======================================================================*
@@ -18,14 +19,14 @@ PUBLIC int kernel_main()
 {
 	disp_str(" - IVIK OS -   Kernel K1\n");
 
-	TASK*		p_task		= task_table;
-	PROCESS*	p_proc		= proc_table;
-	char*		p_task_stack	= task_stack + STACK_SIZE_TOTAL;
-	u16		selector_ldt	= SELECTOR_LDT_FIRST;
+	TASK*		p_task		 = task_table;
+	PROCESS*	p_proc		 = proc_table;
+	char*		p_task_stack = task_stack + STACK_SIZE_TOTAL;
+	u16		selector_ldt	 = SELECTOR_LDT_FIRST;
 	int i;
 	for (i = 0; i < NR_TASKS; i++) {
 		strcpy(p_proc->p_name, p_task->name);	// name of the process
-		p_proc->pid = i;			// pid
+		p_proc->pid = i;						// pid
 
 		p_proc->ldt_sel = selector_ldt;
 
@@ -58,7 +59,8 @@ PUBLIC int kernel_main()
 		selector_ldt += 1 << 3;
 	}
 
-	proc_table[0].ticks = proc_table[0].priority = 1; // Init, pid0
+	proc_table[0].ticks = proc_table[0].priority = 15; // Init, pid0
+	proc_table[1].ticks = proc_table[1].priority = 1; // testA
 
 	k_reenter = 0;
 	ticks = 0;
@@ -78,16 +80,38 @@ PUBLIC int kernel_main()
 	while(1){
 		asm("hlt");
 	}
+
+	return 0;
 }
 
+message m;
 /*======================================================================*
                                Init Process
  *======================================================================*/
 void Init()
 {
-	int i = 0;
+	disp_str("In init\n");
+
+	m.src = 0;
+	m.dst = 0;
+	m.type = 3;
+	
 	while (1) {
-		disp_str("I.");
+		disp_str(".");
+		ipc_send(m);
+		milli_delay(10);
+		message a = *ipc_async_receive(0);
+		if (a.type == 3) {
+			disp_str("!");
+		}
+	}
+}
+
+void Test()
+{
+	for(;;) {
+		get_ticks();
+		disp_str("A");
 		milli_delay(10);
 	}
 }

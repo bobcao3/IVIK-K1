@@ -1,5 +1,5 @@
 /**
- * proto.c
+ * proto.h
  */
 
 /* klib.asm */
@@ -20,6 +20,7 @@ void restart();
 
 /* main.c */
 void Init();
+void Test();
 
 /* i8259.c */
 PUBLIC void put_irq_handler(int irq, irq_handler handler);

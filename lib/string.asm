@@ -1,9 +1,6 @@
-
-; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-;                              string.asm
-; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-;                                                       Forrest Yu, 2005
-; ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+; /**
+;  * string.asm
+;  */
 
 [SECTION .text]
 
@@ -67,14 +64,14 @@ memset:
 	mov	edx, [ebp + 12]	; Char to be putted
 	mov	ecx, [ebp + 16]	; Counter
 .1:
-	cmp	ecx, 0		; 判断计数器
-	jz	.2		; 计数器为零时跳出
+	cmp	ecx, 0				; 判断计数器
+	jz	.2					; 计数器为零时跳出
 
 	mov	byte [edi], dl		; ┓
-	inc	edi			; ┛
+	inc	edi					; ┛
 
-	dec	ecx		; 计数器减一
-	jmp	.1		; 循环
+	dec	ecx					; 计数器减一
+	jmp	.1					; 循环
 .2:
 
 	pop	ecx
@@ -100,7 +97,7 @@ strcpy:
 .1:
 	mov     al, [esi]               ; ┓
 	inc     esi                     ; ┃
-					; ┣ 逐字节移动
+									; ┣ 逐字节移动
 	mov     byte [edi], al          ; ┃
 	inc     edi                     ; ┛
 

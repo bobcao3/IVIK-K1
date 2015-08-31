@@ -1,9 +1,7 @@
-#########################
-# Makefile for Orange'S #
-#########################
+# /**
+#  * Makefile
+#  */
 
-# Entry point of Orange'S
-# It must have the same value with 'KernelEntryPointPhyAddr' in load.inc!
 ENTRYPOINT	= 0x30400
 
 # Offset of entry point in kernel file
@@ -24,23 +22,22 @@ DASMFLAGS	= -u -o $(ENTRYPOINT) -e $(ENTRYOFFSET)
 # This Program
 BOOT	= boot/boot.bin boot/loader.bin
 KERNEL	= kernel.bin
-OBJS		= kernel/kernel.o kernel/syscall.o kernel/start.o kernel/main.o kernel/clock.o\
-			kernel/i8259.o kernel/global.o kernel/protect.o kernel/proc.o\
-			lib/kliba.o lib/klib.o lib/string.o
+OBJS		= kernel/kernel.o kernel/syscall.o kernel/start.o kernel/main.o kernel/clock.o kernel/i8259.o kernel/global.o kernel/protect.o kernel/ipc.o kernel/proc.o lib/kliba.o lib/klib.o lib/string.o
 DASMOUTPUT	= kernel.bin.asm
 
 # All Phony Targets
 .PHONY : everything final image clean realclean disasm all buildimg
 
-# Default starting position
-nop :
-	@echo "why not \`make image' huh? :)"
+nop: all
 
-everything : $(BOOT) $(KERNEL)
+everything : $(BOOT) $(KERNEL) runimg
 
 all : realclean everything
 
 image : realclean everything clean buildimg
+
+runimg : image
+	qemu-system-i386 -fda a.img
 
 clean :
 	rm -f $(OBJS)
@@ -93,8 +90,10 @@ kernel/global.o: kernel/global.c include/type.h include/const.h include/protect.
 			include/global.h include/proto.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-kernel/protect.o: kernel/protect.c include/type.h include/const.h include/protect.h include/proc.h include/proto.h \
-			include/global.h
+kernel/protect.o: kernel/protect.c include/type.h include/const.h include/protect.h include/proc.h include/proto.h include/global.h
+	$(CC) $(CFLAGS) -o $@ $<
+	
+kernel/ipc.o: kernel/ipc.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 kernel/proc.o: kernel/proc.c

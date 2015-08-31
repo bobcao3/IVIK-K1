@@ -1,12 +1,9 @@
-
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            type.h
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                                                    Forrest Yu, 2005
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
-#ifndef	_ORANGES_TYPE_H_
-#define	_ORANGES_TYPE_H_
+/**
+ * type.h
+ */
+ 
+#ifndef	_TYPE_H_
+#define	_TYPE_H_
 
 
 typedef	unsigned int		u32;
@@ -21,4 +18,4 @@ typedef	void	(*irq_handler)	(int irq);
 typedef void*	system_call;
 
 
-#endif /* _ORANGES_TYPE_H_ */
+#endif /* _TYPE_H_ */

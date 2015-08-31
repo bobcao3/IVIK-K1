@@ -1,12 +1,9 @@
+/**
+ * const.h
+ */
 
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            const.h
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                                                    Forrest Yu, 2005
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
-#ifndef	_ORANGES_CONST_H_
-#define	_ORANGES_CONST_H_
+#ifndef	_CONST_H_
+#define	_CONST_H_
 
 
 /* EXTERN */
@@ -64,4 +61,4 @@
 /* system call */
 #define NR_SYS_CALL     1
 
-#endif /* _ORANGES_CONST_H_ */
+#endif /* _CONST_H_ */

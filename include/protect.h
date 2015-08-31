@@ -1,12 +1,9 @@
+/**
+ * protect.h
+ */
 
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                            protect.h
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                                                    Forrest Yu, 2005
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-
-#ifndef	_ORANGES_PROTECT_H_
-#define	_ORANGES_PROTECT_H_
+#ifndef	_PROTECT_H_
+#define	_PROTECT_H_
 
 
 /* 存储段描述符/系统段描述符 */
@@ -151,4 +148,4 @@ typedef struct s_tss {
 #define vir2phys(seg_base, vir)	(u32)(((u32)seg_base) + (u32)(vir))
 
 
-#endif /* _ORANGES_PROTECT_H_ */
+#endif /* _PROTECT_H_ */
